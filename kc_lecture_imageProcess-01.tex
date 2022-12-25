@@ -1,0 +1,1258 @@
+\documentclass{response}
+\linespread{1.3}
+\usepackage{amssymb,amstext,amsmath}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{sidecap}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{paralist}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,%
+    citecolor=blue,%
+    filecolor=black,%
+    linkcolor=red,%
+    urlcolor=blue
+}
+\usepackage{xcolor}
+\usepackage{sectsty}
+%\chapterfont{\color{blue}}  % sets colour of chapters
+\sectionfont{\color{blue}}
+\subsectionfont{\color{magenta}}
+%\usepackage{lipsum}% for auto generating text
+
+
+
+\usepackage[modulo,right]{lineno}
+
+\begin{document}
+\maketitle
+\pagecolor{gray!5}
+
+\includegraphics[scale=0.45]{logo}\\
+\vspace*{1cm}
+
+\renewcommand{\tabcolsep}{1em}
+\begin{tabular}{ll}
+Name: & K.C. Santosh, Ph.D.\\
+Office: & 201, Department of Computer Science \\
+Phone: & (605) 677-5390\\
+Email: & santosh.kc@usd.edu 
+\end{tabular}
+
+\vfill
+
+\section*{\Huge Chapter 2} 
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Agenda }
+\bigskip
+
+{\large 
+
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item Fundamental of digital image processing 
+%\item image enhancement,
+\item Image transforms,
+\item Morphological processing, and
+\item Image segmentation.
+\end{enumerate}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\huge \em Funda. of digital image processing }
+\bigskip
+
+
+{\large 
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item Image, its representation and format,
+\item Pixel operations,
+\item Neighborhood operations,
+\item Geometric operations
+\end{enumerate}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image, its representation \& format }
+\bigskip
+
+
+{\large 
+
+Image is ...
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item Discrete number of pixels.
+\item Their values depend on the image types: color and grayscale.
+\end{itemize}
+
+
+\vspace*{0.5cm}
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.55]{colorTomato-crop} &  \includegraphics[scale=0.55]{grayTomato-crop}\\
+(a) color in rgb format & (b) grayscale  
+\end{tabular}
+
+\vfill
+NB. source code available (in MATLAB) (will be uploaded, after we compile in the class).
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image, its representation \& format }
+\bigskip
+
+
+{\large 
+
+Image as a function $f$ (from $R^2$ to $R^N$)
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item $f(x,y)$ provides an intensity value at location $x,y$.
+\item defined over rectangle in the finite range $[0, 255]$, $f: [a,b]\times [c,d]\rightarrow [0, 255]$
+\item $f(x,y) = \left[ \begin{smallmatrix} r(x,y)\\ g(x,y)\\b(x,y) \end{smallmatrix} \right]$, and 
+\item therefore, $f(50,50) = [223, 112, 0]$.
+\end{itemize}
+\includegraphics[scale=0.55]{colorTomato-crop}
+
+
+\newpage
+Image as a function $f$ (from $R^2$ to $R^N$)
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item $f(x,y)$ provides an intensity value at location $x,y$.
+\item defined over rectangle in the finite range $[0, 255]$, $f: [a,b]\times [c,d]\rightarrow [0, 255]$, and 
+\item therefore, $f(50,50) = 132$ (i.e., grayscale intensity value).
+\end{itemize}
+\includegraphics[scale=0.55]{grayTomato-crop}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image data types }
+\bigskip
+
+
+{\large 
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item RGB (true-colour) images: 3D arrays that assign three numerical values to each pixel, each value corresponding to the red, green and blue (RGB) image channel
+component respectively. 
+
+\item Intensity (grayscale) images: 2D arrays that assign one numerical value to each pixel which is representative of the intensity at this point. 
+
+\item Binary images: 2D arrays that assign one numerical value from the set ${0,1}$ to each pixel in the image, where black pixel corresponds to 0, and white corresponds to 1.
+
+\item Floating-point images. They differ from the other image types. They do not store integer colour values. Instead, they store a floating-point number which, within a given range defined by the floating-point precision of the image bit resolution, represents the intensity.
+\end{enumerate}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image data types ... }
+\bigskip
+
+
+{\large 
+
+Image data types (more...)
+
+\begin{tabular}{lll}
+\includegraphics[scale=0.55]{colorTomato-crop} &
+\includegraphics[scale=0.55]{grayTomato-crop} \\
+(a) Color: 24 bit RGB & (b) Grayscale: 8 bit \\
+\includegraphics[scale=0.55]{binTomato-crop}\\
+(c) Binary: 0 or 1.
+\end{tabular}
+
+\vfill
+NB. source code available (in MATLAB): will be uploaded, after we compile in the class!
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image formats }
+\bigskip
+
+
+{\large 
+
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item GIF: \\
+Graphics interchange format -- Limited to only 256 colors (8-bit); lossless compression.
+\item JPEG: \\
+Joint photographic expert group -- commonly used, lossy compression; lossless variants exist.
+\item BMP: \\
+Bit map picture -- basic image format; limited (generally) lossless compression; lossy variants exist.
+\item PNG: \\
+Portable network graphics -- new lossless compression format; designed to replace GIF.
+\item TIF/TIFF: \\
+Tagged image (file) format -- highly flexible; detailed and adaptable format; compressed/uncompressed variants exist.
+\item DiCOM: \\
+Digital Imaging and Communications in Medicine.
+\end{enumerate}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Image compression }
+\bigskip
+
+
+{\large 
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item objective: reduce irrelevant and redundant image data in order to be able to store or transmit data in an efficient form.
+
+Two types:
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item lossless (jpeg) and 
+\item lossy.
+\end{itemize}
+\item JPEG compression: trade-off between the image quality and the storage.
+\end{itemize}
+
+\renewcommand{\tabcolsep}{0.5em}
+\begin{tabular}{lll}
+\includegraphics[scale=0.30]{lectureImg/originalPeppers} &
+\includegraphics[scale=0.30]{lectureImg/compressPeppers} &
+\begin{tabular}{l}
+ original: 28.3 KB \\
+ compressed: 22.4 KB\\
+\end{tabular}\\
+(a) Original  & (b) Compressed
+\end{tabular}
+
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Color spaces }
+\bigskip
+
+
+{\large 
+
+Color spaces (a hint): RGB to grayscale conversion.
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item A primary step in many image analysis algorithms (i.e. simplifying the amount of information in the image).
+\item No doubt, it contains less information compared to color image.
+\item It preserves important information, such as edges, regions, blobs, and junctions.
+\end{enumerate}
+%
+\begin{eqnarray}\nonumber
+& I_{\mathit{grayscale}(n,m)} = \alpha I_{\mathit{color}} (n,m,r)+ \beta I_{\mathit{color}} (n,m,g) +  \gamma I_{\mathit{color}} (n,m,b) & 
+\end{eqnarray}
+%
+where\\
+-- $(n,m)$ indexes an individual pixel, \\
+-- $(n,m,c)$ the individual channel at pixel in that location, and \\
+-- $\alpha, beta $\mbox{ and }$ \gamma$ are weighting coeffs., are set in proportion to the perceptual response of the human eye, (and uses NTSC television standard, $\alpha = 0.2989, \beta = 0.5870$ and $\gamma =  0.1140$). 
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Point operation }
+\bigskip
+
+
+{\large 
+
+\textit{Definition.} An operation in which an output image is a function of the grayscale of the pixel at the corresponding position in the image, and only that pixel.
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item It does not change the spatial relationships of the image.
+\item It typically includes photometric decalibration, effects of spatial variations in the sensitivity removal, contrast stretching, and thresholding. 
+\end{itemize}
+%
+
+\hspace{1cm} {
+\renewcommand{\tabcolsep}{0.1em}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+101 & 103 & 105 & 100 & 122 & 102 & 100 \\ \hline
+103 & 106 & 100 & 110 & 112 & 122 & 99 \\ \hline
+112 & 115 & 111 & 112 & 119 & 95 & 191 \\ \hline
+$\vdots$ & $\vdots$  & $\vdots$  & $\vdots$  & $\vdots$  & $\vdots$ & $\vdots$ \\
+123 & 203 & 205 & 130 & 222 & 192 & 200 \\ \hline
+201 & 206 & 200 & 210 & 212 & 170 & 199 \\ \hline
+222 & 215 & 213 & 222 & 210 & 195 & 189 \\ \hline
+\end{tabular}
+\mbox{}\\[10pt]
+}
+\hspace*{1cm }Fig. Digital image.
+
+
+\newpage
+
+... contd.\\
+
+\textit{Definition.} An operation in which an output image is a function of the grayscale of the pixel at the corresponding position in the image, and only that pixel.
+
+The process can be described as a mapping function, 
+
+\begin{eqnarray}\nonumber
+&s = M(r) & 
+\end{eqnarray}
+where $r$ and $s$ are the pixels values in the input and output images, respectively, and the mapping function, $M$ determines the effect of operation.
+
+
+\newpage
+
+... contd.\\
+
+{\huge Types of operations:}
+
+\begin{enumerate}\setlength\itemsep{-0.5em}
+\item Thresholding
+\item Contrast stretching
+\item Histogram equalization
+\item Logarithmic operator
+\end{enumerate}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Thresholding }
+\bigskip
+
+
+{\large 
+As an example, it can be used as the thresholding operator:
+\[
+    s= 
+\begin{cases}
+    0, & \text{if } r < T\\
+    L-1, & \text{otherwise}
+\end{cases}
+\]
+\renewcommand{\tabcolsep}{0.2em}
+\begin{tabular}{lll}
+\includegraphics[scale=0.45]{coins} & \includegraphics[scale=0.55]{histo-crop} &
+\includegraphics[scale=0.45]{coins-out} \\
+(a) original & (b) histogram & (c) Output
+\end{tabular}
+
+\vfill
+
+{\small
+$\bullet$ Otsu, N., `A Threshold Selection Method from Gray-Level Histograms,' IEEE Transactions on Systems, Man, and Cybernetics, Vol. 9, No. 1, 1979, pp. 62-66.  
+}
+
+\newpage
+
+\textit{Example.}
+
+
+\begin{figure}[hbp]
+\centering
+\begin{tabular}{lll}
+\includegraphics[scale=2.5]{otsu/otsuOrig1} &  \includegraphics[scale=2.0]{otsu/otsuBG} & \includegraphics[scale=2.0]{otsu/otsuFG}\\
+(a) & (b) & (c)
+\end{tabular}
+\caption{A digital image, its corresponding histogram, and separated background and foreground histograms.}
+\end{figure}
+
+
+\vfill
+{\small \textit{source:} labbookpages.co.uk/software/}
+
+
+
+\newpage
+\textit{Example. ...}
+
+{\huge Background}
+
+\begin{figure}[hbp]
+\centering
+\begin{tabular}{ll}
+\hspace*{10.5cm}\includegraphics[scale=1.2]{otsu/otsuBG}\\
+\includegraphics[scale=0.8]{otsu/bgExample}
+\end{tabular}
+\end{figure}
+
+
+\newpage
+\textit{Example. ...}
+
+{\huge Foreground}
+
+\begin{figure}[hpb]
+\centering
+\begin{tabular}{ll}
+\hspace*{10.5cm}\includegraphics[scale=1.2]{otsu/otsuFG}\\
+\includegraphics[scale=0.8]{otsu/fgExample}
+\end{tabular}
+\end{figure}
+
+
+\newpage
+\textit{Example. ...}
+{\huge Class variance}
+\bigskip
+
+
+Now, within the class variance (sum of the two variances multiplied by their associated weights),
+ 
+ 
+\begin{figure}[hbp]
+\centering
+\begin{tabular}{ll}
+\includegraphics[scale=0.8]{otsu/sumExample}
+\end{tabular}
+\end{figure}
+
+
+\newpage
+\textit{Example. ...}
+
+
+
+We have, 
+\begin{figure}[hpb]
+\centering
+\begin{tabular}{l}
+\includegraphics[scale=0.45]{otsu/otsu0}
+\end{tabular}
+\end{figure}
+
+
+\newpage
+\textit{Example.} contd...
+ 
+\begin{figure}[hbp]
+\centering
+\begin{tabular}{l}
+\includegraphics[scale=2.5]{otsu/otsuResult}
+\end{tabular}
+\end{figure}
+
+
+
+\newpage
+
+{\huge How about `between class variance'?}
+ \bigskip
+ 
+\begin{figure}[hbp]
+\centering
+\begin{tabular}{l}
+\includegraphics[scale=0.72]{otsu/simplification}
+\end{tabular}
+\end{figure}
+
+{\color{red}{Your work: compute inter class variance for all other thresholds: 0, 1, 2, 4, 5.}}
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Contrast  stretching}
+\bigskip
+
+
+{\large 
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item The simplest sort of normalization 
+\item Scans the image to find the lowest (l) and highest (h) pixel values in the image. 
+
+\item Any pixel $p$ is scaled using the following function:
+\[
+p_{\mathit{out}} = (p_{\mathit{in}} - l) \frac{b-a}{h-l} + a     
+\]
+where $a$ and $b$ are the lower and the upper limits of the grayscale values.
+\end{itemize}
+\vfill
+
+{\huge \em Conventional concept!}
+}
+
+
+%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+\bigskip
+\vspace{1cm}
+
+{\large 
+
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item Using intensity histogram
+\item Define \textit{cut-off} functions, representing histogram peaks, and there it resembles $l$ and $h$ as before.
+
+\end{itemize}
+\bigskip
+\bigskip
+
+
+\begin{tabular}{lll}
+\includegraphics[scale=0.45]{kidCry} & \includegraphics[scale=0.55]{histo-kidCry-crop} &
+\includegraphics[scale=0.45]{kidCry-stretch} \\
+(a) original & (b) histogram stretch limit:  & (c) Output\\
+& low = 0.305, & \\
+& high = 0.631 
+\end{tabular}
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Histogram  equalization}
+\bigskip
+
+
+{\large 
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item Increases the global contrast of many images, especially when the usable data of the image is represented by close contrast values.
+\item With this, intensities can be better distributed on the histogram.
+\end{itemize}
+
+
+\begin{tabular}{lll}
+\includegraphics[scale=0.65]{histoEQ/histo} & \includegraphics[scale=0.65]{histoEQ/histeqb} \\
+(a) Histograms:  &(b) An example\\
+(before and after & \textit{source: homepages.inf.ed.ac.uk}\\
+the process) \\
+\textit{source: wiki}
+\end{tabular}
+
+\newpage
+
+\bigskip
+
+{\huge \em Implementation.} 
+\bigskip
+
+Consider grascale image $\{x\}$, and let $n_j$ be the number of occurrences of gray level $i$. Then the probability occurrence of a pixel of level $i$ is,
+
+\[
+p_x(i) = p(x=i) = \frac{n_i}{n}, \mbox{ and } 0\leq i \leq L.
+\]
+where $L=$ total no. of gray levels (i.e, 256), $n=$ total no. of pixels, and $p_x(i) =$ image histo. for pixel value $i$ (in the normalized range: [0,1]). 
+ 
+And the cumulative distribution function (cdf) of $p_x$ is,
+\[
+cdf_x(i) = \sum_{j=0}^ip_x(j).
+\] 
+
+
+\newpage
+
+\bigskip
+
+Our task is to create a transformation, $y = T(x)$ to produce a new image $\{y\}$, with a flat histogram, which will be having linearized cdf across the value range, i.e.
+\[
+cdf_y(i) = iK
+\]
+for some constant $K$. Note that cdf allows us to perform inverse distribution function, 
+\[
+cdf_y(y') = cdf_y(T(k)) = cdf_x(k),
+\] 
+where $k\in [0, L]$ but, $T$ maps the levels into $[0,1].$  \\
+Now we have, 
+\[
+y' = y.(\max\{ x\} - \min\{ x\}) + \min\{ x\}
+\]
+
+
+
+
+\newpage
+
+\bigskip
+
+{\huge \em Example.}
+
+\begin{center}
+\includegraphics[scale=0.75]{histoEQ/8by8}
+\end{center}
+\mbox{}\\
+A grayscale image of size $8\times 8$
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+\begin{center}
+\renewcommand{\tabcolsep}{0.1em}
+\begin{tabular}{|l|l| l|l| l|l| l|l| l|l|}
+\hline
+Val. & Ct.	& Val. & Ct. & Val. & Ct. &	Val. & Ct. & Val. & Ct.\\ \hline \hline
+52	& 1	& 64	& 2	& 72	& 1	& 85	& 2	& 113	& 1 \\ \hline
+55	& 3	& 65	& 3	& 73	& 2	& 87	& 1	& 122	& 1\\ \hline
+58	& 2	& 66	& 2	& 75	& 1	& 88	& 1	& 126	& 1\\ \hline
+59	& 3	& 67	& 1	& 76	& 1	& 90	& 1	& 144	& 1\\ \hline
+60	& 1	& 68	& 5	& 77	& 1	& 94	& 1	& 154	& 1\\ \hline
+61	& 4	& 69	& 3	& 78	& 1	& 104	& 2	& &\\ \hline
+62	& 1	& 70	& 4	& 79	& 2	& 106	& 1 & &\\ \hline
+63	& 2	& 71	& 2	& 83	& 1	& 109	& 1 & &\\ \hline
+\end{tabular}
+\end{center}
+\mbox{}\\
+Val. = value and Ct. = count.
+
+\mbox{}\\[10pt]
+Histogram of the image.
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+\begin{center}
+\renewcommand{\tabcolsep}{0.1em}
+\begin{tabular}{|l|l|l| l|l|l| l|l|l|}
+\hline
+Val. & cdf	& cdf, scaled & Val. & cdf & cdf, scaled &	Val. & cdf & cdf, scaled \\ \hline \hline
+52	& 1	& 0 	& 71	& 39	& 154 & 106	& 58	& 231 \\ \hline
+55	& 4	& 12 	& 72	& 40	& 158 & 109	& 59	& 235\\ \hline
+58	& 6	& 20	& 73	& 42	& 166 & 113	& 60	& 239\\ \hline
+59	& 9	& 32	& 75	& 43	& 170 & 122	& 61	& 243\\ \hline
+60	& 10	& 36& 76	& 44	& 174 & 126	& 62	& 247\\ \hline
+61	& 14	& 53& 77	& 45	& 178 & 144	& 63	& 251\\ \hline
+62	& 15	& 57& 78	& 46	& 182 & 154	& 64	& 255\\ \hline
+63	& 17	& 65& 79	& 48	& 190 &&& \\ \hline
+64	& 19	& 73& 83	& 49	& 194 &&& \\ \hline
+65	& 22	& 85& 85	& 51	& 202 &&& \\ \hline
+66	& 24	& 93& 87	& 52	& 206 &&& \\ \hline
+67	& 25	& 97& 88	& 53	& 210 &&& \\ \hline
+68	& 30	& 117&90	& 54	& 215&&& \\ \hline
+69	& 33	& 130&94	& 55	& 219&&& \\ \hline
+70	& 37	& 146&104	& 57	& 227 &&& \\ \hline
+\end{tabular}
+\end{center}
+\mbox{}\\
+Val. = value and cdf = cumulative distribution function%cdf, and scaled of the image.% (pixel values with zeros are excluded). 
+
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+
+\begin{center}
+\renewcommand{\tabcolsep}{0.1em}
+\begin{tabular}{|l|l|l| l|l|l| l|l|l|}
+\hline
+Val. & cdf	& cdf, scaled & Val. & cdf & cdf, scaled &	Val. & cdf & cdf, scaled \\ \hline \hline
+52	& 1	& 0 	& 71	& 39	& 154 & 106	& 58	& 231 \\ \hline
+55	& 4	& 12 	& 72	& 40	& 158 & 109	& 59	& 235\\ \hline
+\multicolumn{9}{l}{\vdots}\\ 
+70	& 37	& 146&104	& 57	& 227 &&& \\ \hline
+\end{tabular}
+\end{center}
+\mbox{}\\
+
+Steps: cdf $\rightarrow$ cdf, scaled \\
+\begin{itemize}
+\item Normalize to $[0,1]$
+\item Normalize to $[0, L]$, where $L = 256$.
+\end{itemize}
+
+Maths\\
+$range = \max(cdf) - \min(cdf)$ // normalize to $[0,1]$
+$cdf = \frac{cdf - min(cdf)}{range}$
+\mbox{}\\[5pt]
+
+$ range2 = L - 0$;
+$ cdf = (cdf*range2) + 0$ //cdf, scaled. 
+
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+
+\vspace{1cm}
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.650]{histoEQ/8by8} &
+\includegraphics[scale=0.650]{histoEQ/8by8-out}\\
+%(c)\includegraphics[scale=0.45]{histoEQ/8by8-img} &
+%(d)\includegraphics[scale=0.45]{histoEQ/8by8-imgO}
+(a) Before & (b) After
+\end{tabular}
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+
+\vspace{1cm}
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.75]{histoEQ/8by8-img} &
+\includegraphics[scale=0.75]{histoEQ/8by8-imgO}\\
+(a) Before & (b) After
+\end{tabular}
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+
+\vspace{1cm}
+
+\begin{tabular}{ll}
+(a) \includegraphics[scale=0.6]{histoEQ/300pxNZ} &
+\includegraphics[scale=0.6]{histoEQ/300pxNZ-histomatlab-crop} \\
+(b) \includegraphics[scale=0.6]{histoEQ/300pxNZ-out}&
+\includegraphics[scale=0.6]{histoEQ/300pxNZ-out-histomatlab-crop}
+\end{tabular}
+
+\mbox{}\\
+Real-world example.
+
+
+\newpage
+
+\bigskip
+
+{\huge \em More to know.}
+\vspace{1cm}
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item Useful when backgrounds and foregrounds are both bright or both dark. It can lead to better views of bone structure in x-ray images, and to better detail in photographs that are over or under-exposed. 
+
+\item It is a fairly straightforward technique and an invertible operator. 
+
+So in theory, if the histogram equalization function is known, then the original histogram can be recovered.
+
+\item It is not computationally expensive.
+\item A key disadvantage is that it is indiscriminate (i.e., it may increase the contrast of background noise, while decreasing the usable signal).
+\end{itemize}
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Logarithmic operator}
+\bigskip
+
+
+{\large 
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item Known by the names: pixel logarithm and dynamic range compression.
+\item The dynamic range of an image can be compressed by replacing each pixel value with its logarithm. 
+
+In effect, low intensity pixel values are enhanced.
+\item Mapping function is a lograrithm curve, $s = M(r)$.
+\end{itemize}
+
+\begin{figure}[hbp]
+\centering
+\includegraphics[scale=0.55]{lectureImg/pixlogb}\\
+\mbox{}\\
+Pixel logarithm (dynamic range compression)
+\end{figure}
+
+\vfill
+{\small \textit{source: homepages.inf.ed.ac.uk/}}
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+...contd.
+
+\vspace{1cm}
+
+An overall idea can be expressed as, 
+\[
+s(i,j) = c \cdot log(|r(i,j)|).
+\]
+Logarithm is not defined for 0, and therefore we add the value 1 to the image before taking the logarithm,
+\[
+s(i,j) = c \cdot log(1+ |r(i,j)|),
+\]
+where $c$ is chosen so that the maximum possible output value is 255 (8-bit format). It means, 
+\[
+c = \frac{255}{log(1+|X|)},
+\]
+where $X=$ can be red, green, blue color value.
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge \em Example.} ...contd.
+
+\vspace{1cm}
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.75]{lectureImg/man8} &
+\includegraphics[scale=0.75]{lectureImg/man8log1} \\
+(a) Before & (b) After
+\end{tabular}
+\vfill
+
+\textit{source: homepages.inf.ed.ac.uk}
+
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Geometric operations}
+\bigskip
+
+
+{\large 
+
+
+Three fundamental operations:
+
+\begin{itemize}
+\item Translation,
+\item Scaling and 
+\item Rotation.
+\end{itemize}
+
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+...contd.
+
+Overall idea: transforming $p_1 = (x_1, y_1)$ to $p_2 = (x_2, y_2)$,
+
+ \[
+  \left[ {\begin{array}{c}
+   x_2 \\    y_2  \end{array} } \right]
+= 
+A \times 
+  \left[ {\begin{array}{c}
+   x_1 \\    y_1  \end{array} } \right]
+   +
+   B
+\]
+
+Translation: 
+\[
+A = \left[ 
+{\begin{array}{cc}
+   1 & 0  \\   0 & 1 \end{array} }\right]
+   \mbox{ and }
+B =
+\left[ 
+{\begin{array}{cc}
+   b1  \\   b2 \end{array} }\right]   
+\]
+
+Rotation: 
+\[
+A = \left[ 
+{\begin{array}{cc}
+   cos\theta & -sin\theta  \\  sin\theta & cos\theta \end{array} }\right]
+   \mbox{ and }
+B =
+\left[ 
+{\begin{array}{cc}
+   0  \\   0 \end{array} }\right]   
+\]
+
+Scaling: 
+\[
+A = \left[ 
+{\begin{array}{cc}
+   \alpha_{11} & 0  \\  0 & \alpha_{22} \end{array} }\right]
+   \mbox{ and }
+B =
+\left[ 
+{\begin{array}{cc}
+   0  \\   0 \end{array} }\right]   
+\]
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge Example.} ...contd.
+
+{\huge Image translation.} 
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.9]{lectureImg/imgTrans_smart-crop}\\
+\end{tabular}
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge Example.} ...contd.
+
+{\huge Image rotation.} 
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.9]{lectureImg/imgRot-crop}\\
+\end{tabular}
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge Example.} ...contd.
+
+{\huge Image scaling.} 
+
+\begin{tabular}{ll}
+\includegraphics[scale=0.7]{lectureImg/imgScale-crop}\\
+\end{tabular}
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge ... more to know.} 
+
+{\huge Image scaling (resizing).} 
+\bigskip
+
+
+\begin{figure}[hbp]
+\begin{tabular}{lll}
+\includegraphics[scale=0.7]{lectureImg/interpolation_2D} &
+\includegraphics[scale=0.695]{lectureImg/interpolation_2D-lg} 
+\includegraphics[scale=0.7]{lectureImg/interpolation_2D-interp} & 
+\includegraphics[scale=0.7]{lectureImg/interpolation_nointerp}\\
+(a) original & (b) interpolation & (c) no interpolation
+\end{tabular}
+\mbox{}\\[20pt]
+An illustration of image resizing using interpolation.
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge ... more to know.} 
+
+{\huge Image scaling (resizing).} ... contd.
+\bigskip
+
+
+
+\begin{figure}[hpb]
+\begin{tabular}{l}
+\includegraphics[scale=0.7]{lectureImg/scalzoom} \\
+\end{tabular}
+\mbox{}\\[20pt]
+Zooming (+ve): How does it work?
+\end{figure}
+
+
+
+
+
+%%%%%%%%%%%%%%
+\newpage
+
+\bigskip
+
+{\huge ... more to know.} 
+
+{\huge Image scaling (resizing).} ... contd.
+\bigskip
+
+\begin{figure}[hbp]
+\begin{tabular}{l}
+\includegraphics[scale=0.7]{lectureImg/scalsubs} 
+\end{tabular}
+\mbox{}\\[20pt]
+Zooming (-ve): How does it work?
+\end{figure}
+
+
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Arithmetic operations}
+\bigskip
+
+
+{\large 
+
+{\huge  Pixel addition.}
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item While adding two images, the output pixel values can be expressed as, $$q(i,j) = p1(i,j) + p2(i,j).$$\\
+OR\\
+
+we can simply add a constant value $C$, $$q(i,j) = p1(i,j) + C.$$
+\end{itemize}
+
+\vfill
+Note:
+If the pixel values in the input images are actually vectors rather than scalar values (e.g. for color images) then the individual components (e.g. red, blue and green components) are simply added separately to produce the output value.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+
+
+{\huge Pixel subtraction.}
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item While subtracting two images, the output pixel values can be expressed as, $$q(i,j) = p1(i,j) - p2(i,j).$$
+
+OR\\
+$$q(i,j) = |p1(i,j) - p2(i,j)|.$$
+
+OR\\
+we can simply add a constant value $C$, $$q(i,j) = p1(i,j) - C.$$
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+
+{\huge Example: addition.} ... contd.
+\bigskip
+
+
+\begin{figure}[htp]
+\centering
+\begin{tabular}{llll}
+\includegraphics[height = 7cm, width = 7cm]{lectureImg/egg1} &
++ 50 &
+=
+\includegraphics[height = 7cm, width = 7cm]{lectureImg/egg1add1} 
+\end{tabular}
+\mbox{}\\[20pt]
+An example, showing pixel addition.
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+
+{\huge Example: substraction.} ... contd.
+\bigskip
+
+
+\begin{figure}[hpb]
+\centering
+\renewcommand{\tabcolsep}{0.3em}
+\begin{tabular}{llll}
+(a) \includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son1} - 
+\includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son2} =
+\includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son1sub1} &
+\includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son1thr3} \\
+
+(b) \includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son1} &
+\includegraphics[height = 4.7cm, width = 4cm]{lectureImg/son1thr1} 
+\end{tabular}
+\caption{An example, showing image subtraction.}
+\end{figure}
+
+%Index.\\
+%(a): straightforward process\\
+%(b): use of background subtraction.
+%\vfill
+
+NB. How well, we can do image thresholding?
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+
+
+{\huge Pixel multiplication.}
+
+\begin{itemize}\setlength\itemsep{-0.5em}
+\item While multiplying two images, the output pixel values can be expressed as, $$q(i,j) = p1(i,j) * p2(i,j).$$
+
+OR\\
+we can simply add a constant value $C$, $$q(i,j) = p1(i,j) \times C.$$
+\end{itemize}
+
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection*{\Huge\em Logical operations}
+\bigskip
+
+
+{\large 
+
+
+{\huge Pixel ANDing and ORing}\\[1cm]
+
+\begin{tabular}{ll|l}
+\hline 
+A & B & out\\ \hline
+
+0 & 0 & 0\\
+0 & 1 & 0\\
+1 & 0 & 0\\
+1 & 1 & 1\\ \hline 
+\end{tabular}
+\hspace*{0.5cm}
+\begin{tabular}{ll|l}
+\hline 
+A & B & out\\ \hline
+
+0 & 0 & 0\\
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 1\\ \hline 
+\end{tabular}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bigskip
+
+
+{\huge Example: ANDing and ORing.}
+
+\begin{figure}[hbp]
+\begin{tabular}{lllll}
+\includegraphics[scale=0.75]{lectureImg/scr3} &
+\includegraphics[scale=0.75]{lectureImg/scr3thr1} 
+\includegraphics[scale=0.75]{lectureImg/scr4} &
+\includegraphics[scale=0.75]{lectureImg/scr4thr1} \\
+(a) & (b)\\
+
+\includegraphics[scale=0.75]{lectureImg/scr3and3} &
+\includegraphics[scale=0.75]{lectureImg/scr3or1} \\
+(c) AND  &  OR\\
+\end{tabular}
+\mbox{}\\[20pt]
+
+An example, showing ANDing and ORing two images.
+\end{figure}
+
+
+Index.\\
+(a - b): grayscale to binary image conversion.\\
+(c): output from ANDing and ORing.
+
+}
+
+
+\end{document}
